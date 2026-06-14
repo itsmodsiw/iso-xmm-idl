@@ -9,601 +9,2219 @@
   "instructions": [
     {
       "name": "ping",
-      "docs": ["disc 0: CU-floor probe. Validates nothing, returns Ok."],
-      "discriminator": [0],
+      "docs": [
+        "disc 0: CU-floor probe. Validates nothing, returns Ok."
+      ],
+      "discriminator": [
+        0
+      ],
       "accounts": [],
       "args": []
     },
     {
-      "name": "create_config",
-      "docs": ["disc 1: initialize an AmmConfig PDA (a protocol fee-tier)."],
-      "discriminator": [1],
-      "accounts": [
-        { "name": "admin", "writable": false, "signer": true, "docs": ["protocol admin authority; recorded as config admin"] },
-        { "name": "amm_config", "writable": true, "signer": false, "pda": { "seeds": [ { "kind": "const", "value": [97,109,109,95,99,111,110,102,105,103] }, { "kind": "arg", "path": "index" } ] }, "docs": ["PDA [b\"amm_config\", index_be]"] },
-        { "name": "system_program", "writable": false, "signer": false, "address": "11111111111111111111111111111111" }
-      ],
-      "args": [
-        { "name": "index", "type": "u16" },
-        { "name": "trade_fee_rate", "type": "u32" },
-        { "name": "protocol_fee_rate", "type": "u32" },
-        { "name": "fund_fee_rate", "type": "u32" },
-        { "name": "tick_spacing", "type": "u16" }
-      ]
-    },
-    {
       "name": "create_pool",
-      "docs": ["disc 2: initialize a PoolStateClmm + both vaults + observation ring + bitmap-extension + per-pool Core collection.", "BODY: pool_nonce u32 | sqrt_price_x64 u128 | name (len u8 + bytes) | uri (len u8 + bytes)."],
-      "discriminator": [2],
+      "docs": [
+        "disc 2: initialize a PoolStateClmm + both vaults + observation ring + bitmap-extension + per-pool Core collection.",
+        "BODY: pool_nonce u32 | sqrt_price_x64 u128 | name (len u8 + bytes) | uri (len u8 + bytes)."
+      ],
+      "discriminator": [
+        2
+      ],
       "accounts": [
-        { "name": "creator", "writable": true, "signer": true, "docs": ["funds rent; also Core collection signer"] },
-        { "name": "amm_config", "writable": false, "signer": false, "docs": ["decoded for tick_spacing/fee"] },
-        { "name": "pool", "writable": true, "signer": false, "docs": ["PDA [b\"pool\", amm_config, mint_0, mint_1, pool_nonce_le]"] },
-        { "name": "token_mint_0", "writable": false, "signer": false, "docs": ["addr(mint_0) < addr(mint_1)"] },
-        { "name": "token_mint_1", "writable": false, "signer": false },
-        { "name": "token_vault_0", "writable": true, "signer": false, "docs": ["PDA [b\"pool_vault\", pool, mint_0]"] },
-        { "name": "token_vault_1", "writable": true, "signer": false, "docs": ["PDA [b\"pool_vault\", pool, mint_1]"] },
-        { "name": "observation", "writable": true, "signer": false, "docs": ["PDA [b\"observation\", pool]"] },
-        { "name": "bitmap_extension", "writable": true, "signer": false, "docs": ["PDA [b\"pool_tick_array_bitmap_extension\", pool]"] },
-        { "name": "collection", "writable": true, "signer": true, "docs": ["iso-vanity client keypair (Core collection)"] },
-        { "name": "token_program_0", "writable": false, "signer": false, "docs": ["== owner(mint_0)"] },
-        { "name": "token_program_1", "writable": false, "signer": false, "docs": ["== owner(mint_1)"] },
-        { "name": "mpl_core", "writable": false, "signer": false, "address": "CoREENxT6tW1HoK8ypY1SxRMZTcVPm7R94rH4PZNhX7d" },
-        { "name": "system_program", "writable": false, "signer": false, "address": "11111111111111111111111111111111" }
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true,
+          "docs": [
+            "funds rent; also Core collection signer"
+          ]
+        },
+        {
+          "name": "amm_config",
+          "writable": false,
+          "signer": false,
+          "docs": [
+            "decoded for tick_spacing/fee"
+          ]
+        },
+        {
+          "name": "pool",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "PDA [b\"pool\", amm_config, mint_0, mint_1, pool_nonce_le]"
+          ]
+        },
+        {
+          "name": "token_mint_0",
+          "writable": false,
+          "signer": false,
+          "docs": [
+            "addr(mint_0) < addr(mint_1)"
+          ]
+        },
+        {
+          "name": "token_mint_1",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "name": "token_vault_0",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "PDA [b\"pool_vault\", pool, mint_0]"
+          ]
+        },
+        {
+          "name": "token_vault_1",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "PDA [b\"pool_vault\", pool, mint_1]"
+          ]
+        },
+        {
+          "name": "observation",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "PDA [b\"observation\", pool]"
+          ]
+        },
+        {
+          "name": "bitmap_extension",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "PDA [b\"pool_tick_array_bitmap_extension\", pool]"
+          ]
+        },
+        {
+          "name": "collection",
+          "writable": true,
+          "signer": true,
+          "docs": [
+            "iso-vanity client keypair (Core collection)"
+          ]
+        },
+        {
+          "name": "token_program_0",
+          "writable": false,
+          "signer": false,
+          "docs": [
+            "== owner(mint_0)"
+          ]
+        },
+        {
+          "name": "token_program_1",
+          "writable": false,
+          "signer": false,
+          "docs": [
+            "== owner(mint_1)"
+          ]
+        },
+        {
+          "name": "mpl_core",
+          "writable": false,
+          "signer": false,
+          "address": "CoREENxT6tW1HoK8ypY1SxRMZTcVPm7R94rH4PZNhX7d"
+        },
+        {
+          "name": "system_program",
+          "writable": false,
+          "signer": false,
+          "address": "11111111111111111111111111111111"
+        }
       ],
       "args": [
-        { "name": "pool_nonce", "type": "u32" },
-        { "name": "sqrt_price_x64", "type": "u128" },
-        { "name": "name", "type": "string" },
-        { "name": "uri", "type": "string" }
+        {
+          "name": "pool_nonce",
+          "type": "u32"
+        },
+        {
+          "name": "sqrt_price_x64",
+          "type": "u128"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "uri",
+          "type": "string"
+        }
       ]
     },
     {
       "name": "open_position",
-      "docs": ["disc 3: init a PositionState PDA keyed to a Core asset, mint the position NFT, lazily init the two boundary tick arrays. Liquidity starts at 0."],
-      "discriminator": [3],
+      "docs": [
+        "disc 3: init a PositionState PDA keyed to a Core asset, mint the position NFT, lazily init the two boundary tick arrays. Liquidity starts at 0."
+      ],
+      "discriminator": [
+        3
+      ],
       "accounts": [
-        { "name": "payer", "writable": true, "signer": true, "docs": ["funds rent; NFT owner; recorded as rent_receiver"] },
-        { "name": "pool", "writable": false, "signer": false, "docs": ["decoded for tick_spacing; collection update authority"] },
-        { "name": "position", "writable": true, "signer": false, "docs": ["PDA [b\"position\", asset]"] },
-        { "name": "asset", "writable": true, "signer": true, "docs": ["iso-vanity client keypair (Core NFT)"] },
-        { "name": "collection", "writable": true, "signer": false, "docs": ["the pool's Core collection"] },
-        { "name": "tick_array_lower", "writable": true, "signer": false, "docs": ["PDA [b\"tick_array\", pool, lower_start_be]"] },
-        { "name": "tick_array_upper", "writable": true, "signer": false, "docs": ["PDA [b\"tick_array\", pool, upper_start_be]"] },
-        { "name": "mpl_core", "writable": false, "signer": false, "address": "CoREENxT6tW1HoK8ypY1SxRMZTcVPm7R94rH4PZNhX7d" },
-        { "name": "system_program", "writable": false, "signer": false, "address": "11111111111111111111111111111111" }
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true,
+          "docs": [
+            "funds rent; NFT owner; recorded as rent_receiver"
+          ]
+        },
+        {
+          "name": "pool",
+          "writable": false,
+          "signer": false,
+          "docs": [
+            "decoded for tick_spacing; collection update authority"
+          ]
+        },
+        {
+          "name": "position",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "PDA [b\"position\", asset]"
+          ]
+        },
+        {
+          "name": "asset",
+          "writable": true,
+          "signer": true,
+          "docs": [
+            "iso-vanity client keypair (Core NFT)"
+          ]
+        },
+        {
+          "name": "collection",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "the pool's Core collection"
+          ]
+        },
+        {
+          "name": "tick_array_lower",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "PDA [b\"tick_array\", pool, lower_start_be]"
+          ]
+        },
+        {
+          "name": "tick_array_upper",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "PDA [b\"tick_array\", pool, upper_start_be]"
+          ]
+        },
+        {
+          "name": "mpl_core",
+          "writable": false,
+          "signer": false,
+          "address": "CoREENxT6tW1HoK8ypY1SxRMZTcVPm7R94rH4PZNhX7d"
+        },
+        {
+          "name": "system_program",
+          "writable": false,
+          "signer": false,
+          "address": "11111111111111111111111111111111"
+        }
       ],
       "args": [
-        { "name": "tick_lower_index", "type": "i32" },
-        { "name": "tick_upper_index", "type": "i32" }
+        {
+          "name": "tick_lower_index",
+          "type": "i32"
+        },
+        {
+          "name": "tick_upper_index",
+          "type": "i32"
+        }
       ]
     },
     {
       "name": "increase_liquidity",
-      "docs": ["disc 4: add liquidity to a position (deposit amounts round UP). bitmap_extension (idx 12) is OPTIONAL: required only when a boundary tick-array start is outside the pool-internal window."],
-      "discriminator": [4],
+      "docs": [
+        "disc 4: add liquidity to a position (deposit amounts round UP). bitmap_extension (idx 12) is OPTIONAL: required only when a boundary tick-array start is outside the pool-internal window."
+      ],
+      "discriminator": [
+        4
+      ],
       "accounts": [
-        { "name": "owner", "writable": false, "signer": true, "docs": ["gated by assert_asset_owner"] },
-        { "name": "pool", "writable": true, "signer": false },
-        { "name": "position", "writable": true, "signer": false, "docs": ["PDA [b\"position\", asset]"] },
-        { "name": "asset", "writable": false, "signer": false, "docs": ["Core NFT; ownership gate target"] },
-        { "name": "tick_array_lower", "writable": true, "signer": false },
-        { "name": "tick_array_upper", "writable": true, "signer": false },
-        { "name": "token_owner_0", "writable": true, "signer": false, "docs": ["user src ATA (mint_0)"] },
-        { "name": "token_owner_1", "writable": true, "signer": false, "docs": ["user src ATA (mint_1)"] },
-        { "name": "token_vault_0", "writable": true, "signer": false, "docs": ["== pool.token_vault_0"] },
-        { "name": "token_vault_1", "writable": true, "signer": false, "docs": ["== pool.token_vault_1"] },
-        { "name": "token_program_0", "writable": false, "signer": false },
-        { "name": "token_program_1", "writable": false, "signer": false },
-        { "name": "bitmap_extension", "writable": true, "signer": false, "optional": true, "docs": ["OPTIONAL; PDA [b\"pool_tick_array_bitmap_extension\", pool]"] }
+        {
+          "name": "owner",
+          "writable": false,
+          "signer": true,
+          "docs": [
+            "gated by assert_asset_owner"
+          ]
+        },
+        {
+          "name": "pool",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "name": "position",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "PDA [b\"position\", asset]"
+          ]
+        },
+        {
+          "name": "asset",
+          "writable": false,
+          "signer": false,
+          "docs": [
+            "Core NFT; ownership gate target"
+          ]
+        },
+        {
+          "name": "tick_array_lower",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "name": "tick_array_upper",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "name": "token_owner_0",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "user src ATA (mint_0)"
+          ]
+        },
+        {
+          "name": "token_owner_1",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "user src ATA (mint_1)"
+          ]
+        },
+        {
+          "name": "token_vault_0",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "== pool.token_vault_0"
+          ]
+        },
+        {
+          "name": "token_vault_1",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "== pool.token_vault_1"
+          ]
+        },
+        {
+          "name": "token_program_0",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "name": "token_program_1",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "name": "bitmap_extension",
+          "writable": true,
+          "signer": false,
+          "optional": true,
+          "docs": [
+            "OPTIONAL; PDA [b\"pool_tick_array_bitmap_extension\", pool]"
+          ]
+        }
       ],
       "args": [
-        { "name": "amount_0_max", "type": "u64" },
-        { "name": "amount_1_max", "type": "u64" }
+        {
+          "name": "amount_0_max",
+          "type": "u64"
+        },
+        {
+          "name": "amount_1_max",
+          "type": "u64"
+        }
       ]
     },
     {
       "name": "decrease_liquidity",
-      "docs": ["disc 5: remove liquidity from a position (withdraw amounts round DOWN); pool PDA signs the vault-out transfers. bitmap_extension (idx 12) is OPTIONAL."],
-      "discriminator": [5],
+      "docs": [
+        "disc 5: remove liquidity from a position (withdraw amounts round DOWN); pool PDA signs the vault-out transfers. bitmap_extension (idx 12) is OPTIONAL."
+      ],
+      "discriminator": [
+        5
+      ],
       "accounts": [
-        { "name": "owner", "writable": false, "signer": true, "docs": ["gated by assert_asset_owner"] },
-        { "name": "pool", "writable": true, "signer": false, "docs": ["PDA signs vault-out"] },
-        { "name": "position", "writable": true, "signer": false, "docs": ["PDA [b\"position\", asset]"] },
-        { "name": "asset", "writable": false, "signer": false, "docs": ["Core NFT; ownership gate target"] },
-        { "name": "tick_array_lower", "writable": true, "signer": false },
-        { "name": "tick_array_upper", "writable": true, "signer": false },
-        { "name": "token_owner_0", "writable": true, "signer": false, "docs": ["user dst ATA (mint_0)"] },
-        { "name": "token_owner_1", "writable": true, "signer": false, "docs": ["user dst ATA (mint_1)"] },
-        { "name": "token_vault_0", "writable": true, "signer": false, "docs": ["== pool.token_vault_0"] },
-        { "name": "token_vault_1", "writable": true, "signer": false, "docs": ["== pool.token_vault_1"] },
-        { "name": "token_program_0", "writable": false, "signer": false },
-        { "name": "token_program_1", "writable": false, "signer": false },
-        { "name": "bitmap_extension", "writable": true, "signer": false, "optional": true, "docs": ["OPTIONAL; PDA [b\"pool_tick_array_bitmap_extension\", pool]"] }
+        {
+          "name": "owner",
+          "writable": false,
+          "signer": true,
+          "docs": [
+            "gated by assert_asset_owner"
+          ]
+        },
+        {
+          "name": "pool",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "PDA signs vault-out"
+          ]
+        },
+        {
+          "name": "position",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "PDA [b\"position\", asset]"
+          ]
+        },
+        {
+          "name": "asset",
+          "writable": false,
+          "signer": false,
+          "docs": [
+            "Core NFT; ownership gate target"
+          ]
+        },
+        {
+          "name": "tick_array_lower",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "name": "tick_array_upper",
+          "writable": true,
+          "signer": false
+        },
+        {
+          "name": "token_owner_0",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "user dst ATA (mint_0)"
+          ]
+        },
+        {
+          "name": "token_owner_1",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "user dst ATA (mint_1)"
+          ]
+        },
+        {
+          "name": "token_vault_0",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "== pool.token_vault_0"
+          ]
+        },
+        {
+          "name": "token_vault_1",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "== pool.token_vault_1"
+          ]
+        },
+        {
+          "name": "token_program_0",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "name": "token_program_1",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "name": "bitmap_extension",
+          "writable": true,
+          "signer": false,
+          "optional": true,
+          "docs": [
+            "OPTIONAL; PDA [b\"pool_tick_array_bitmap_extension\", pool]"
+          ]
+        }
       ],
       "args": [
-        { "name": "liquidity", "type": "u128" },
-        { "name": "amount_0_min", "type": "u64" },
-        { "name": "amount_1_min", "type": "u64" }
+        {
+          "name": "liquidity",
+          "type": "u128"
+        },
+        {
+          "name": "amount_0_min",
+          "type": "u64"
+        },
+        {
+          "name": "amount_1_min",
+          "type": "u64"
+        }
       ]
     },
     {
       "name": "swap",
-      "docs": ["disc 6 (Engine A1): exact-in/exact-out tick-array-window walk. zero_for_one is inferred from input_vault == pool.token_vault_0. TAIL after the 10-account head: bitmap_extension FIRST, then up to 12 tick-array PDAs (the swap window). sqrt_price_limit_x64 == 0 => direction-appropriate bound."],
-      "discriminator": [6],
+      "docs": [
+        "disc 6 (Engine A1): exact-in/exact-out tick-array-window walk. zero_for_one is inferred from input_vault == pool.token_vault_0. TAIL after the 10-account head: bitmap_extension FIRST, then up to 12 tick-array PDAs (the swap window). sqrt_price_limit_x64 == 0 => direction-appropriate bound."
+      ],
+      "discriminator": [
+        6
+      ],
       "accounts": [
-        { "name": "payer", "writable": false, "signer": true, "docs": ["funds + authority for input transfer"] },
-        { "name": "amm_config", "writable": false, "signer": false },
-        { "name": "pool", "writable": true, "signer": false, "docs": ["quote source + writeback; PDA signs output vault"] },
-        { "name": "input_token_account", "writable": true, "signer": false, "docs": ["user src ATA (input mint)"] },
-        { "name": "output_token_account", "writable": true, "signer": false, "docs": ["user dst ATA (output mint)"] },
-        { "name": "input_vault", "writable": true, "signer": false, "docs": ["== pool.token_vault_{0|1}"] },
-        { "name": "output_vault", "writable": true, "signer": false, "docs": ["== pool.token_vault_{1|0}"] },
-        { "name": "observation", "writable": true, "signer": false, "docs": ["TWAP ring (tick_cumulative)"] },
-        { "name": "input_token_program", "writable": false, "signer": false, "docs": ["routes input vault (== input vault owner)"] },
-        { "name": "output_token_program", "writable": false, "signer": false, "docs": ["routes output vault (== output vault owner)"] }
+        {
+          "name": "payer",
+          "writable": false,
+          "signer": true,
+          "docs": [
+            "funds + authority for input transfer"
+          ]
+        },
+        {
+          "name": "amm_config",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "name": "pool",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "quote source + writeback; PDA signs output vault"
+          ]
+        },
+        {
+          "name": "input_token_account",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "user src ATA (input mint)"
+          ]
+        },
+        {
+          "name": "output_token_account",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "user dst ATA (output mint)"
+          ]
+        },
+        {
+          "name": "input_vault",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "== pool.token_vault_{0|1}"
+          ]
+        },
+        {
+          "name": "output_vault",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "== pool.token_vault_{1|0}"
+          ]
+        },
+        {
+          "name": "observation",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "TWAP ring (tick_cumulative)"
+          ]
+        },
+        {
+          "name": "input_token_program",
+          "writable": false,
+          "signer": false,
+          "docs": [
+            "routes input vault (== input vault owner)"
+          ]
+        },
+        {
+          "name": "output_token_program",
+          "writable": false,
+          "signer": false,
+          "docs": [
+            "routes output vault (== output vault owner)"
+          ]
+        }
       ],
       "args": [
-        { "name": "amount", "type": "u64" },
-        { "name": "other_amount_threshold", "type": "u64" },
-        { "name": "sqrt_price_limit_x64", "type": "u128" },
-        { "name": "is_base_input", "type": "bool" }
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "other_amount_threshold",
+          "type": "u64"
+        },
+        {
+          "name": "sqrt_price_limit_x64",
+          "type": "u128"
+        },
+        {
+          "name": "is_base_input",
+          "type": "bool"
+        }
       ]
     },
     {
       "name": "collect_fees",
-      "docs": ["disc 7: pay accrued fees to the position owner (pool PDA signs vault-out), zero owed + re-snapshot fee_growth_inside."],
-      "discriminator": [7],
+      "docs": [
+        "disc 7: pay accrued fees to the position owner (pool PDA signs vault-out), zero owed + re-snapshot fee_growth_inside."
+      ],
+      "discriminator": [
+        7
+      ],
       "accounts": [
-        { "name": "owner", "writable": false, "signer": true, "docs": ["gated by assert_asset_owner"] },
-        { "name": "pool", "writable": false, "signer": false, "docs": ["fee_growth_global source; PDA signs vault-out"] },
-        { "name": "position", "writable": true, "signer": false, "docs": ["PDA [b\"position\", asset]"] },
-        { "name": "asset", "writable": false, "signer": false, "docs": ["Core NFT; ownership gate target"] },
-        { "name": "token_owner_0", "writable": true, "signer": false, "docs": ["user dst ATA (mint_0)"] },
-        { "name": "token_owner_1", "writable": true, "signer": false, "docs": ["user dst ATA (mint_1)"] },
-        { "name": "token_vault_0", "writable": true, "signer": false, "docs": ["== pool.token_vault_0"] },
-        { "name": "token_vault_1", "writable": true, "signer": false, "docs": ["== pool.token_vault_1"] },
-        { "name": "token_program_0", "writable": false, "signer": false },
-        { "name": "token_program_1", "writable": false, "signer": false },
-        { "name": "tick_array_lower", "writable": false, "signer": false, "docs": ["fee_growth_outside source"] },
-        { "name": "tick_array_upper", "writable": false, "signer": false, "docs": ["fee_growth_outside source"] }
+        {
+          "name": "owner",
+          "writable": false,
+          "signer": true,
+          "docs": [
+            "gated by assert_asset_owner"
+          ]
+        },
+        {
+          "name": "pool",
+          "writable": false,
+          "signer": false,
+          "docs": [
+            "fee_growth_global source; PDA signs vault-out"
+          ]
+        },
+        {
+          "name": "position",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "PDA [b\"position\", asset]"
+          ]
+        },
+        {
+          "name": "asset",
+          "writable": false,
+          "signer": false,
+          "docs": [
+            "Core NFT; ownership gate target"
+          ]
+        },
+        {
+          "name": "token_owner_0",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "user dst ATA (mint_0)"
+          ]
+        },
+        {
+          "name": "token_owner_1",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "user dst ATA (mint_1)"
+          ]
+        },
+        {
+          "name": "token_vault_0",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "== pool.token_vault_0"
+          ]
+        },
+        {
+          "name": "token_vault_1",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "== pool.token_vault_1"
+          ]
+        },
+        {
+          "name": "token_program_0",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "name": "token_program_1",
+          "writable": false,
+          "signer": false
+        },
+        {
+          "name": "tick_array_lower",
+          "writable": false,
+          "signer": false,
+          "docs": [
+            "fee_growth_outside source"
+          ]
+        },
+        {
+          "name": "tick_array_upper",
+          "writable": false,
+          "signer": false,
+          "docs": [
+            "fee_growth_outside source"
+          ]
+        }
       ],
       "args": []
     },
     {
       "name": "close_position",
-      "docs": ["disc 8: close an empty position (liquidity==0 AND owed==0), burn the Core NFT, reclaim PositionState rent to position.rent_receiver."],
-      "discriminator": [8],
+      "docs": [
+        "disc 8: close an empty position (liquidity==0 AND owed==0), burn the Core NFT, reclaim PositionState rent to position.rent_receiver."
+      ],
+      "discriminator": [
+        8
+      ],
       "accounts": [
-        { "name": "owner", "writable": true, "signer": true, "docs": ["assert_asset_owner; BurnV1 payer/authority"] },
-        { "name": "position", "writable": true, "signer": false, "docs": ["PDA [b\"position\", asset]"] },
-        { "name": "asset", "writable": true, "signer": false, "docs": ["Core NFT to burn; ownership gate target"] },
-        { "name": "collection", "writable": true, "signer": false, "docs": ["the pool's Core collection (counter)"] },
-        { "name": "rent_receiver", "writable": true, "signer": false, "docs": ["== position.rent_receiver"] },
-        { "name": "mpl_core", "writable": false, "signer": false, "address": "CoREENxT6tW1HoK8ypY1SxRMZTcVPm7R94rH4PZNhX7d" },
-        { "name": "system_program", "writable": false, "signer": false, "address": "11111111111111111111111111111111" }
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true,
+          "docs": [
+            "assert_asset_owner; BurnV1 payer/authority"
+          ]
+        },
+        {
+          "name": "position",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "PDA [b\"position\", asset]"
+          ]
+        },
+        {
+          "name": "asset",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "Core NFT to burn; ownership gate target"
+          ]
+        },
+        {
+          "name": "collection",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "the pool's Core collection (counter)"
+          ]
+        },
+        {
+          "name": "rent_receiver",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "== position.rent_receiver"
+          ]
+        },
+        {
+          "name": "mpl_core",
+          "writable": false,
+          "signer": false,
+          "address": "CoREENxT6tW1HoK8ypY1SxRMZTcVPm7R94rH4PZNhX7d"
+        },
+        {
+          "name": "system_program",
+          "writable": false,
+          "signer": false,
+          "address": "11111111111111111111111111111111"
+        }
       ],
       "args": []
-    },
-    {
-      "name": "create_anchor_pool",
-      "docs": ["disc 16 (Engine B): initialize a PoolStateAnchor PDA + its two vaults; register the bounded pricer hot key and the spread/cap/staleness params. guardian and max_band_bps are OPTIONAL trailing args (92, 124, or 132 byte body)."],
-      "discriminator": [16],
-      "accounts": [
-        { "name": "creator", "writable": true, "signer": true, "docs": ["funds rent; pool authority (owner)"] },
-        { "name": "amm_config", "writable": false, "signer": false, "docs": ["decoded (owner + disc check)"] },
-        { "name": "pool", "writable": true, "signer": false, "docs": ["PDA [b\"pool_anchor\", amm_config, mint_0, mint_1, pool_nonce_le]"] },
-        { "name": "token_mint_0", "writable": false, "signer": false, "docs": ["addr(mint_0) < addr(mint_1)"] },
-        { "name": "token_mint_1", "writable": false, "signer": false },
-        { "name": "token_vault_0", "writable": true, "signer": false, "docs": ["PDA [b\"pool_vault\", pool, mint_0]"] },
-        { "name": "token_vault_1", "writable": true, "signer": false, "docs": ["PDA [b\"pool_vault\", pool, mint_1]"] },
-        { "name": "token_program_0", "writable": false, "signer": false, "docs": ["== owner(mint_0)"] },
-        { "name": "token_program_1", "writable": false, "signer": false, "docs": ["== owner(mint_1)"] },
-        { "name": "system_program", "writable": false, "signer": false, "address": "11111111111111111111111111111111" }
-      ],
-      "args": [
-        { "name": "pool_nonce", "type": "u32" },
-        { "name": "pricer_hot_key", "type": "pubkey" },
-        { "name": "delta_cap_bps", "type": "u64" },
-        { "name": "capacity_cap", "type": "u64" },
-        { "name": "max_slot_lag", "type": "u64" },
-        { "name": "max_age_ms", "type": "u64" },
-        { "name": "s_floor", "type": "u64" },
-        { "name": "cap_bps", "type": "u64" },
-        { "name": "conf_max", "type": "u64" },
-        { "name": "guardian", "type": { "option": "pubkey" } },
-        { "name": "max_band_bps", "type": { "option": "u64" } }
-      ]
-    },
-    {
-      "name": "post_price",
-      "docs": ["disc 17 (Engine B): the bounded pricer hot key refreshes the posted quote (price/band/conf + stamps) within the delta cap. data_slot and price_updated_ms in the body are IGNORED on-chain (re-stamped from the Clock sysvar) to defend phantom freshness; params_hash is folded to a u64 content stamp on-chain."],
-      "discriminator": [17],
-      "accounts": [
-        { "name": "pricer_hot_key", "writable": false, "signer": true, "docs": ["== pool.pricer_hot_key (else 6042)"] },
-        { "name": "pool", "writable": true, "signer": false, "docs": ["PoolStateAnchor"] }
-      ],
-      "args": [
-        { "name": "price_x64", "type": "u128" },
-        { "name": "bid_factor", "type": "u64" },
-        { "name": "ask_factor", "type": "u64" },
-        { "name": "confidence", "type": "u64" },
-        { "name": "price_updated_ms", "type": "i64" },
-        { "name": "data_slot", "type": "u64" },
-        { "name": "params_hash", "type": { "array": ["u8", 32] } }
-      ]
     },
     {
       "name": "swap_anchor",
-      "docs": ["disc 18 (Engine B): linear posted-price maker swap (exact-in). Direction inferred from input_vault == pool.token_vault_0. Zero protocol fee; gates (paused/stale/capacity/slippage) revert."],
-      "discriminator": [18],
+      "docs": [
+        "disc 18 (Engine B): linear posted-price maker swap (exact-in). Direction inferred from input_vault == pool.token_vault_0. Zero protocol fee; gates (paused/stale/capacity/slippage) revert."
+      ],
+      "discriminator": [
+        18
+      ],
       "accounts": [
-        { "name": "payer", "writable": false, "signer": true, "docs": ["input transfer authority"] },
-        { "name": "pool", "writable": false, "signer": false, "docs": ["quote source; PDA signs output"] },
-        { "name": "input_token_account", "writable": true, "signer": false, "docs": ["user src ATA (input mint)"] },
-        { "name": "output_token_account", "writable": true, "signer": false, "docs": ["user dst ATA (output mint)"] },
-        { "name": "input_vault", "writable": true, "signer": false, "docs": ["== pool.token_vault_{0|1}"] },
-        { "name": "output_vault", "writable": true, "signer": false, "docs": ["== pool.token_vault_{1|0}"] },
-        { "name": "input_token_program", "writable": false, "signer": false, "docs": ["routes input vault"] },
-        { "name": "output_token_program", "writable": false, "signer": false, "docs": ["routes output vault"] }
+        {
+          "name": "payer",
+          "writable": false,
+          "signer": true,
+          "docs": [
+            "input transfer authority"
+          ]
+        },
+        {
+          "name": "pool",
+          "writable": false,
+          "signer": false,
+          "docs": [
+            "quote source; PDA signs output"
+          ]
+        },
+        {
+          "name": "input_token_account",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "user src ATA (input mint)"
+          ]
+        },
+        {
+          "name": "output_token_account",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "user dst ATA (output mint)"
+          ]
+        },
+        {
+          "name": "input_vault",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "== pool.token_vault_{0|1}"
+          ]
+        },
+        {
+          "name": "output_vault",
+          "writable": true,
+          "signer": false,
+          "docs": [
+            "== pool.token_vault_{1|0}"
+          ]
+        },
+        {
+          "name": "input_token_program",
+          "writable": false,
+          "signer": false,
+          "docs": [
+            "routes input vault"
+          ]
+        },
+        {
+          "name": "output_token_program",
+          "writable": false,
+          "signer": false,
+          "docs": [
+            "routes output vault"
+          ]
+        }
       ],
       "args": [
-        { "name": "amount", "type": "u64" },
-        { "name": "other_amount_threshold", "type": "u64" }
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "other_amount_threshold",
+          "type": "u64"
+        }
       ]
-    },
-    {
-      "name": "deposit_inventory",
-      "docs": ["disc 19 (Engine B): pool owner funds inventory (owner ATAs -> pool vaults), then stamps inventory_base (and target_base if set_target). set_target!=0 re-anchors the skew target."],
-      "discriminator": [19],
-      "accounts": [
-        { "name": "owner", "writable": false, "signer": true, "docs": ["== pool.owner (transfer authority)"] },
-        { "name": "pool", "writable": true, "signer": false, "docs": ["PoolStateAnchor (inventory writeback)"] },
-        { "name": "src_0", "writable": true, "signer": false, "docs": ["owner base ATA (token_0)"] },
-        { "name": "src_1", "writable": true, "signer": false, "docs": ["owner quote ATA (token_1)"] },
-        { "name": "vault_0", "writable": true, "signer": false, "docs": ["== pool.token_vault_0"] },
-        { "name": "vault_1", "writable": true, "signer": false, "docs": ["== pool.token_vault_1"] },
-        { "name": "token_program_0", "writable": false, "signer": false, "docs": ["routes token_0 transfer"] },
-        { "name": "token_program_1", "writable": false, "signer": false, "docs": ["routes token_1 transfer"] }
-      ],
-      "args": [
-        { "name": "amount_0", "type": "u64" },
-        { "name": "amount_1", "type": "u64" },
-        { "name": "set_target", "type": "bool" }
-      ]
-    },
-    {
-      "name": "withdraw_inventory",
-      "docs": ["disc 20 (Engine B): pool owner withdraws inventory (pool vaults -> owner ATAs, pool PDA signs), then re-stamps inventory_base (and target_base if set_target)."],
-      "discriminator": [20],
-      "accounts": [
-        { "name": "owner", "writable": false, "signer": true, "docs": ["== pool.owner"] },
-        { "name": "pool", "writable": true, "signer": false, "docs": ["PoolStateAnchor; PDA signs vault-out"] },
-        { "name": "dst_0", "writable": true, "signer": false, "docs": ["owner base ATA (token_0)"] },
-        { "name": "dst_1", "writable": true, "signer": false, "docs": ["owner quote ATA (token_1)"] },
-        { "name": "vault_0", "writable": true, "signer": false, "docs": ["== pool.token_vault_0"] },
-        { "name": "vault_1", "writable": true, "signer": false, "docs": ["== pool.token_vault_1"] },
-        { "name": "token_program_0", "writable": false, "signer": false, "docs": ["routes token_0 transfer"] },
-        { "name": "token_program_1", "writable": false, "signer": false, "docs": ["routes token_1 transfer"] }
-      ],
-      "args": [
-        { "name": "amount_0", "type": "u64" },
-        { "name": "amount_1", "type": "u64" },
-        { "name": "set_target", "type": "bool" }
-      ]
-    },
-    {
-      "name": "set_status",
-      "docs": ["disc 21: halt/un-halt a pool (BOTH PoolStateClmm and PoolStateAnchor; resolved by account disc). Guardian may HALT-only (set the type's halt bit); owner may set/clear any bit. bit > 7 => 6003. disable!=0 sets the bit (HALT); 0 clears (un-halt)."],
-      "discriminator": [21],
-      "accounts": [
-        { "name": "authority", "writable": false, "signer": true, "docs": ["== pool.owner OR (non-zero) pool.guardian"] },
-        { "name": "pool", "writable": true, "signer": false, "docs": ["PoolStateClmm or PoolStateAnchor"] }
-      ],
-      "args": [
-        { "name": "bit", "type": "u8" },
-        { "name": "disable", "type": "bool" }
-      ]
-    },
-    {
-      "name": "close_pool",
-      "docs": ["disc 22: owner-only teardown of an EMPTY + PAUSED pool (BOTH engines; resolved by account disc). CLMM head is 11 accounts (incl observation + bitmap_ext); Anchor head is 9 accounts. Accounts below are the CLMM variant; for an anchored pool, omit observation + bitmap_ext (the remaining accounts shift down by 2). Sweeps residual dust to owner ATAs and reclaims rent to rent_receiver."],
-      "discriminator": [22],
-      "accounts": [
-        { "name": "authority", "writable": false, "signer": true, "docs": ["== pool.owner"] },
-        { "name": "pool", "writable": true, "signer": false, "docs": ["PoolStateClmm/PoolStateAnchor; PDA signs vault sweep + close"] },
-        { "name": "observation", "writable": true, "signer": false, "optional": true, "docs": ["CLMM only: == pool.observation_key"] },
-        { "name": "bitmap_extension", "writable": true, "signer": false, "optional": true, "docs": ["CLMM only: PDA [b\"pool_tick_array_bitmap_extension\", pool]"] },
-        { "name": "vault_0", "writable": true, "signer": false, "docs": ["== pool.token_vault_0"] },
-        { "name": "vault_1", "writable": true, "signer": false, "docs": ["== pool.token_vault_1"] },
-        { "name": "dst_0", "writable": true, "signer": false, "docs": ["owner ATA(mint_0): residual sweep target"] },
-        { "name": "dst_1", "writable": true, "signer": false, "docs": ["owner ATA(mint_1): residual sweep target"] },
-        { "name": "rent_receiver", "writable": true, "signer": false, "docs": ["reclaimed-rent destination"] },
-        { "name": "token_program_0", "writable": false, "signer": false, "docs": ["== owner(vault_0)"] },
-        { "name": "token_program_1", "writable": false, "signer": false, "docs": ["== owner(vault_1)"] }
-      ],
-      "args": []
     }
   ],
   "accounts": [
-    { "name": "AmmConfig", "discriminator": [1] },
-    { "name": "PoolStateClmm", "discriminator": [2] },
-    { "name": "TickArray", "discriminator": [3] },
-    { "name": "Position", "discriminator": [4] },
-    { "name": "Observation", "discriminator": [5] },
-    { "name": "BitmapExtension", "discriminator": [6] },
-    { "name": "PoolStateAnchor", "discriminator": [7] }
+    {
+      "name": "AmmConfig",
+      "discriminator": [
+        1
+      ]
+    },
+    {
+      "name": "PoolStateClmm",
+      "discriminator": [
+        2
+      ]
+    },
+    {
+      "name": "TickArray",
+      "discriminator": [
+        3
+      ]
+    },
+    {
+      "name": "Position",
+      "discriminator": [
+        4
+      ]
+    },
+    {
+      "name": "Observation",
+      "discriminator": [
+        5
+      ]
+    },
+    {
+      "name": "BitmapExtension",
+      "discriminator": [
+        6
+      ]
+    },
+    {
+      "name": "PoolStateAnchor",
+      "discriminator": [
+        7
+      ]
+    }
   ],
   "types": [
     {
       "name": "AmmConfig",
-      "docs": ["disc 1. Protocol fee-tier menu. 1-byte disc at offset 0; LE scalars. SIZE 247 bytes."],
+      "docs": [
+        "disc 1. Protocol fee-tier menu. 1-byte disc at offset 0; LE scalars. SIZE 247 bytes."
+      ],
       "type": {
         "kind": "struct",
         "fields": [
-          { "name": "disc", "type": "u8", "docs": ["offset 0"] },
-          { "name": "index", "type": "u16", "docs": ["offset 1 (tier index; also PDA seed)"] },
-          { "name": "trade_fee_rate", "type": "u32", "docs": ["offset 3 (fraction of 1e9)"] },
-          { "name": "protocol_fee_rate", "type": "u32", "docs": ["offset 7"] },
-          { "name": "fund_fee_rate", "type": "u32", "docs": ["offset 11"] },
-          { "name": "tick_spacing", "type": "u16", "docs": ["offset 15"] },
-          { "name": "bump", "type": "u8", "docs": ["offset 17"] },
-          { "name": "_pad0", "type": "u8", "docs": ["offset 18"] },
-          { "name": "_pad1", "type": "u32", "docs": ["offset 19 (8-byte realign)"] },
-          { "name": "admin", "type": "pubkey", "docs": ["offset 23"] },
-          { "name": "reserved", "type": { "array": ["u64", 24] }, "docs": ["offset 55 (upgrade room)"] }
+          {
+            "name": "disc",
+            "type": "u8",
+            "docs": [
+              "offset 0"
+            ]
+          },
+          {
+            "name": "index",
+            "type": "u16",
+            "docs": [
+              "offset 1 (tier index; also PDA seed)"
+            ]
+          },
+          {
+            "name": "trade_fee_rate",
+            "type": "u32",
+            "docs": [
+              "offset 3 (fraction of 1e9)"
+            ]
+          },
+          {
+            "name": "protocol_fee_rate",
+            "type": "u32",
+            "docs": [
+              "offset 7"
+            ]
+          },
+          {
+            "name": "fund_fee_rate",
+            "type": "u32",
+            "docs": [
+              "offset 11"
+            ]
+          },
+          {
+            "name": "tick_spacing",
+            "type": "u16",
+            "docs": [
+              "offset 15"
+            ]
+          },
+          {
+            "name": "bump",
+            "type": "u8",
+            "docs": [
+              "offset 17"
+            ]
+          },
+          {
+            "name": "_pad0",
+            "type": "u8",
+            "docs": [
+              "offset 18"
+            ]
+          },
+          {
+            "name": "_pad1",
+            "type": "u32",
+            "docs": [
+              "offset 19 (8-byte realign)"
+            ]
+          },
+          {
+            "name": "admin",
+            "type": "pubkey",
+            "docs": [
+              "offset 23"
+            ]
+          },
+          {
+            "name": "reserved",
+            "type": {
+              "array": [
+                "u64",
+                24
+              ]
+            },
+            "docs": [
+              "offset 55 (upgrade room)"
+            ]
+          }
         ]
       }
     },
     {
       "name": "PoolStateClmm",
-      "docs": ["disc 2. CLMM pool. Field order verbatim Raydium PoolState; 1-byte disc means every iso offset is the Raydium offset minus 7. packed; u128 fields read_unaligned. SIZE 1545 bytes."],
+      "docs": [
+        "disc 2. CLMM pool. Field order verbatim Raydium PoolState; 1-byte disc means every iso offset is the Raydium offset minus 7. packed; u128 fields read_unaligned. SIZE 1545 bytes."
+      ],
       "type": {
         "kind": "struct",
         "fields": [
-          { "name": "disc", "type": "u8", "docs": ["offset 0"] },
-          { "name": "bump", "type": "u8", "docs": ["offset 1"] },
-          { "name": "amm_config", "type": "pubkey", "docs": ["offset 2"] },
-          { "name": "owner", "type": "pubkey", "docs": ["offset 34"] },
-          { "name": "token_mint_0", "type": "pubkey", "docs": ["offset 66 (mint_0 addr < mint_1 addr)"] },
-          { "name": "token_mint_1", "type": "pubkey", "docs": ["offset 98"] },
-          { "name": "token_vault_0", "type": "pubkey", "docs": ["offset 130"] },
-          { "name": "token_vault_1", "type": "pubkey", "docs": ["offset 162"] },
-          { "name": "observation_key", "type": "pubkey", "docs": ["offset 194"] },
-          { "name": "mint_decimals_0", "type": "u8", "docs": ["offset 226"] },
-          { "name": "mint_decimals_1", "type": "u8", "docs": ["offset 227"] },
-          { "name": "tick_spacing", "type": "u16", "docs": ["offset 228"] },
-          { "name": "liquidity", "type": "u128", "docs": ["offset 230 (active in-range liquidity, unaligned)"] },
-          { "name": "sqrt_price_x64", "type": "u128", "docs": ["offset 246 (Q64.64 sqrt(token1/token0), unaligned)"] },
-          { "name": "tick_current", "type": "i32", "docs": ["offset 262"] },
-          { "name": "padding3", "type": "u16", "docs": ["offset 266"] },
-          { "name": "padding4", "type": "u16", "docs": ["offset 268"] },
-          { "name": "fee_growth_global_0_x64", "type": "u128", "docs": ["offset 270"] },
-          { "name": "fee_growth_global_1_x64", "type": "u128", "docs": ["offset 286"] },
-          { "name": "protocol_fees_token_0", "type": "u64", "docs": ["offset 302"] },
-          { "name": "protocol_fees_token_1", "type": "u64", "docs": ["offset 310"] },
-          { "name": "swap_in_amount_token_0", "type": "u128", "docs": ["offset 318"] },
-          { "name": "swap_out_amount_token_1", "type": "u128", "docs": ["offset 334"] },
-          { "name": "swap_in_amount_token_1", "type": "u128", "docs": ["offset 350"] },
-          { "name": "swap_out_amount_token_0", "type": "u128", "docs": ["offset 366"] },
-          { "name": "status", "type": "u8", "docs": ["offset 382 (PoolStatusBit; bit 4 set = swap disabled)"] },
-          { "name": "status_padding", "type": { "array": ["u8", 7] }, "docs": ["offset 383"] },
-          { "name": "reward_infos", "type": { "array": [{ "defined": { "name": "RewardInfo" } }, 3] }, "docs": ["offset 390 (3 x 169 bytes)"] },
-          { "name": "tick_array_bitmap", "type": { "array": ["u64", 16] }, "docs": ["offset 897 (pool-internal bitmap)"] },
-          { "name": "total_fees_token_0", "type": "u64", "docs": ["offset 1025"] },
-          { "name": "total_fees_claimed_token_0", "type": "u64", "docs": ["offset 1033"] },
-          { "name": "total_fees_token_1", "type": "u64", "docs": ["offset 1041"] },
-          { "name": "total_fees_claimed_token_1", "type": "u64", "docs": ["offset 1049"] },
-          { "name": "fund_fees_token_0", "type": "u64", "docs": ["offset 1057"] },
-          { "name": "fund_fees_token_1", "type": "u64", "docs": ["offset 1065"] },
-          { "name": "open_time", "type": "u64", "docs": ["offset 1073"] },
-          { "name": "recent_epoch", "type": "u64", "docs": ["offset 1081 (live epoch for token-2022 fee tier)"] },
-          { "name": "fee_rate", "type": "u32", "docs": ["offset 1089 (resolved trade-fee snapshot, 1e9 denom)"] },
-          { "name": "pool_nonce", "type": "u32", "docs": ["offset 1093 (vanity-grind seed tail, in the pool PDA seed)"] },
-          { "name": "guardian", "type": "pubkey", "docs": ["offset 1097 (HALT-only guardian; all-zero = none)"] },
-          { "name": "padding1", "type": { "array": ["u64", 20] }, "docs": ["offset 1129 (upgrade room)"] },
-          { "name": "padding2", "type": { "array": ["u64", 32] }, "docs": ["offset 1289 (upgrade room)"] }
+          {
+            "name": "disc",
+            "type": "u8",
+            "docs": [
+              "offset 0"
+            ]
+          },
+          {
+            "name": "bump",
+            "type": "u8",
+            "docs": [
+              "offset 1"
+            ]
+          },
+          {
+            "name": "amm_config",
+            "type": "pubkey",
+            "docs": [
+              "offset 2"
+            ]
+          },
+          {
+            "name": "owner",
+            "type": "pubkey",
+            "docs": [
+              "offset 34"
+            ]
+          },
+          {
+            "name": "token_mint_0",
+            "type": "pubkey",
+            "docs": [
+              "offset 66 (mint_0 addr < mint_1 addr)"
+            ]
+          },
+          {
+            "name": "token_mint_1",
+            "type": "pubkey",
+            "docs": [
+              "offset 98"
+            ]
+          },
+          {
+            "name": "token_vault_0",
+            "type": "pubkey",
+            "docs": [
+              "offset 130"
+            ]
+          },
+          {
+            "name": "token_vault_1",
+            "type": "pubkey",
+            "docs": [
+              "offset 162"
+            ]
+          },
+          {
+            "name": "observation_key",
+            "type": "pubkey",
+            "docs": [
+              "offset 194"
+            ]
+          },
+          {
+            "name": "mint_decimals_0",
+            "type": "u8",
+            "docs": [
+              "offset 226"
+            ]
+          },
+          {
+            "name": "mint_decimals_1",
+            "type": "u8",
+            "docs": [
+              "offset 227"
+            ]
+          },
+          {
+            "name": "tick_spacing",
+            "type": "u16",
+            "docs": [
+              "offset 228"
+            ]
+          },
+          {
+            "name": "liquidity",
+            "type": "u128",
+            "docs": [
+              "offset 230 (active in-range liquidity, unaligned)"
+            ]
+          },
+          {
+            "name": "sqrt_price_x64",
+            "type": "u128",
+            "docs": [
+              "offset 246 (Q64.64 sqrt(token1/token0), unaligned)"
+            ]
+          },
+          {
+            "name": "tick_current",
+            "type": "i32",
+            "docs": [
+              "offset 262"
+            ]
+          },
+          {
+            "name": "padding3",
+            "type": "u16",
+            "docs": [
+              "offset 266"
+            ]
+          },
+          {
+            "name": "padding4",
+            "type": "u16",
+            "docs": [
+              "offset 268"
+            ]
+          },
+          {
+            "name": "fee_growth_global_0_x64",
+            "type": "u128",
+            "docs": [
+              "offset 270"
+            ]
+          },
+          {
+            "name": "fee_growth_global_1_x64",
+            "type": "u128",
+            "docs": [
+              "offset 286"
+            ]
+          },
+          {
+            "name": "protocol_fees_token_0",
+            "type": "u64",
+            "docs": [
+              "offset 302"
+            ]
+          },
+          {
+            "name": "protocol_fees_token_1",
+            "type": "u64",
+            "docs": [
+              "offset 310"
+            ]
+          },
+          {
+            "name": "swap_in_amount_token_0",
+            "type": "u128",
+            "docs": [
+              "offset 318"
+            ]
+          },
+          {
+            "name": "swap_out_amount_token_1",
+            "type": "u128",
+            "docs": [
+              "offset 334"
+            ]
+          },
+          {
+            "name": "swap_in_amount_token_1",
+            "type": "u128",
+            "docs": [
+              "offset 350"
+            ]
+          },
+          {
+            "name": "swap_out_amount_token_0",
+            "type": "u128",
+            "docs": [
+              "offset 366"
+            ]
+          },
+          {
+            "name": "status",
+            "type": "u8",
+            "docs": [
+              "offset 382 (PoolStatusBit; bit 4 set = swap disabled)"
+            ]
+          },
+          {
+            "name": "status_padding",
+            "type": {
+              "array": [
+                "u8",
+                7
+              ]
+            },
+            "docs": [
+              "offset 383"
+            ]
+          },
+          {
+            "name": "reward_infos",
+            "type": {
+              "array": [
+                {
+                  "defined": {
+                    "name": "RewardInfo"
+                  }
+                },
+                3
+              ]
+            },
+            "docs": [
+              "offset 390 (3 x 169 bytes)"
+            ]
+          },
+          {
+            "name": "tick_array_bitmap",
+            "type": {
+              "array": [
+                "u64",
+                16
+              ]
+            },
+            "docs": [
+              "offset 897 (pool-internal bitmap)"
+            ]
+          },
+          {
+            "name": "total_fees_token_0",
+            "type": "u64",
+            "docs": [
+              "offset 1025"
+            ]
+          },
+          {
+            "name": "total_fees_claimed_token_0",
+            "type": "u64",
+            "docs": [
+              "offset 1033"
+            ]
+          },
+          {
+            "name": "total_fees_token_1",
+            "type": "u64",
+            "docs": [
+              "offset 1041"
+            ]
+          },
+          {
+            "name": "total_fees_claimed_token_1",
+            "type": "u64",
+            "docs": [
+              "offset 1049"
+            ]
+          },
+          {
+            "name": "fund_fees_token_0",
+            "type": "u64",
+            "docs": [
+              "offset 1057"
+            ]
+          },
+          {
+            "name": "fund_fees_token_1",
+            "type": "u64",
+            "docs": [
+              "offset 1065"
+            ]
+          },
+          {
+            "name": "open_time",
+            "type": "u64",
+            "docs": [
+              "offset 1073"
+            ]
+          },
+          {
+            "name": "recent_epoch",
+            "type": "u64",
+            "docs": [
+              "offset 1081 (live epoch for token-2022 fee tier)"
+            ]
+          },
+          {
+            "name": "fee_rate",
+            "type": "u32",
+            "docs": [
+              "offset 1089 (resolved trade-fee snapshot, 1e9 denom)"
+            ]
+          },
+          {
+            "name": "pool_nonce",
+            "type": "u32",
+            "docs": [
+              "offset 1093 (vanity-grind seed tail, in the pool PDA seed)"
+            ]
+          },
+          {
+            "name": "guardian",
+            "type": "pubkey",
+            "docs": [
+              "offset 1097 (HALT-only guardian; all-zero = none)"
+            ]
+          },
+          {
+            "name": "padding1",
+            "type": {
+              "array": [
+                "u64",
+                20
+              ]
+            },
+            "docs": [
+              "offset 1129 (upgrade room)"
+            ]
+          },
+          {
+            "name": "padding2",
+            "type": {
+              "array": [
+                "u64",
+                32
+              ]
+            },
+            "docs": [
+              "offset 1289 (upgrade room)"
+            ]
+          }
         ]
       }
     },
     {
       "name": "RewardInfo",
-      "docs": ["Nested in PoolStateClmm.reward_infos. Layout-faithful to Raydium RewardInfo; 169 bytes packed; zeroed in v1."],
+      "docs": [
+        "Nested in PoolStateClmm.reward_infos. Layout-faithful to Raydium RewardInfo; 169 bytes packed; zeroed in v1."
+      ],
       "type": {
         "kind": "struct",
         "fields": [
-          { "name": "reward_state", "type": "u8" },
-          { "name": "open_time", "type": "u64" },
-          { "name": "end_time", "type": "u64" },
-          { "name": "last_update_time", "type": "u64" },
-          { "name": "emissions_per_second_x64", "type": "u128" },
-          { "name": "reward_total_emissioned", "type": "u64" },
-          { "name": "reward_claimed", "type": "u64" },
-          { "name": "token_mint", "type": "pubkey" },
-          { "name": "token_vault", "type": "pubkey" },
-          { "name": "authority", "type": "pubkey" },
-          { "name": "reward_growth_global_x64", "type": "u128" }
+          {
+            "name": "reward_state",
+            "type": "u8"
+          },
+          {
+            "name": "open_time",
+            "type": "u64"
+          },
+          {
+            "name": "end_time",
+            "type": "u64"
+          },
+          {
+            "name": "last_update_time",
+            "type": "u64"
+          },
+          {
+            "name": "emissions_per_second_x64",
+            "type": "u128"
+          },
+          {
+            "name": "reward_total_emissioned",
+            "type": "u64"
+          },
+          {
+            "name": "reward_claimed",
+            "type": "u64"
+          },
+          {
+            "name": "token_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "token_vault",
+            "type": "pubkey"
+          },
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "reward_growth_global_x64",
+            "type": "u128"
+          }
         ]
       }
     },
     {
       "name": "TickArray",
-      "docs": ["disc 3 (TickArrayState). One paged array of 60 ticks. PDA [b\"tick_array\", pool_id, start_tick_index_be (i32 BE)]. packed."],
+      "docs": [
+        "disc 3 (TickArrayState). One paged array of 60 ticks. PDA [b\"tick_array\", pool_id, start_tick_index_be (i32 BE)]. packed."
+      ],
       "type": {
         "kind": "struct",
         "fields": [
-          { "name": "disc", "type": "u8", "docs": ["offset 0"] },
-          { "name": "pool_id", "type": "pubkey", "docs": ["offset 1 (relational-binding target)"] },
-          { "name": "start_tick_index", "type": "i32", "docs": ["offset 33"] },
-          { "name": "ticks", "type": { "array": [{ "defined": { "name": "TickState" } }, 60] }, "docs": ["offset 37 (60 x 168 bytes)"] },
-          { "name": "initialized_tick_count", "type": "u8", "docs": ["offset 10117"] },
-          { "name": "recent_epoch", "type": "u64", "docs": ["offset 10118"] },
-          { "name": "padding", "type": { "array": ["u8", 107] }, "docs": ["offset 10126"] }
+          {
+            "name": "disc",
+            "type": "u8",
+            "docs": [
+              "offset 0"
+            ]
+          },
+          {
+            "name": "pool_id",
+            "type": "pubkey",
+            "docs": [
+              "offset 1 (relational-binding target)"
+            ]
+          },
+          {
+            "name": "start_tick_index",
+            "type": "i32",
+            "docs": [
+              "offset 33"
+            ]
+          },
+          {
+            "name": "ticks",
+            "type": {
+              "array": [
+                {
+                  "defined": {
+                    "name": "TickState"
+                  }
+                },
+                60
+              ]
+            },
+            "docs": [
+              "offset 37 (60 x 168 bytes)"
+            ]
+          },
+          {
+            "name": "initialized_tick_count",
+            "type": "u8",
+            "docs": [
+              "offset 10117"
+            ]
+          },
+          {
+            "name": "recent_epoch",
+            "type": "u64",
+            "docs": [
+              "offset 10118"
+            ]
+          },
+          {
+            "name": "padding",
+            "type": {
+              "array": [
+                "u8",
+                107
+              ]
+            },
+            "docs": [
+              "offset 10126"
+            ]
+          }
         ]
       }
     },
     {
       "name": "TickState",
-      "docs": ["Nested in TickArray.ticks. 168 bytes packed (verbatim Raydium TickState order)."],
+      "docs": [
+        "Nested in TickArray.ticks. 168 bytes packed (verbatim Raydium TickState order)."
+      ],
       "type": {
         "kind": "struct",
         "fields": [
-          { "name": "tick", "type": "i32" },
-          { "name": "liquidity_net", "type": "i128", "docs": ["net liquidity delta crossing this tick left->right"] },
-          { "name": "liquidity_gross", "type": "u128" },
-          { "name": "fee_growth_outside_0_x64", "type": "u128" },
-          { "name": "fee_growth_outside_1_x64", "type": "u128" },
-          { "name": "reward_growths_outside_x64", "type": { "array": ["u128", 3] } },
-          { "name": "padding", "type": { "array": ["u32", 13] } }
+          {
+            "name": "tick",
+            "type": "i32"
+          },
+          {
+            "name": "liquidity_net",
+            "type": "i128",
+            "docs": [
+              "net liquidity delta crossing this tick left->right"
+            ]
+          },
+          {
+            "name": "liquidity_gross",
+            "type": "u128"
+          },
+          {
+            "name": "fee_growth_outside_0_x64",
+            "type": "u128"
+          },
+          {
+            "name": "fee_growth_outside_1_x64",
+            "type": "u128"
+          },
+          {
+            "name": "reward_growths_outside_x64",
+            "type": {
+              "array": [
+                "u128",
+                3
+              ]
+            }
+          },
+          {
+            "name": "padding",
+            "type": {
+              "array": [
+                "u32",
+                13
+              ]
+            }
+          }
         ]
       }
     },
     {
       "name": "Position",
-      "docs": ["disc 4 (PositionState). Authoritative LP position keyed by its Core NFT asset. PDA [b\"position\", core_asset]. packed."],
+      "docs": [
+        "disc 4 (PositionState). Authoritative LP position keyed by its Core NFT asset. PDA [b\"position\", core_asset]. packed."
+      ],
       "type": {
         "kind": "struct",
         "fields": [
-          { "name": "disc", "type": "u8", "docs": ["offset 0"] },
-          { "name": "bump", "type": "u8", "docs": ["offset 1"] },
-          { "name": "pool_id", "type": "pubkey", "docs": ["offset 2 (relational-binding target)"] },
-          { "name": "core_asset", "type": "pubkey", "docs": ["offset 34 (ownership handle / gate target)"] },
-          { "name": "tick_lower_index", "type": "i32", "docs": ["offset 66"] },
-          { "name": "tick_upper_index", "type": "i32", "docs": ["offset 70"] },
-          { "name": "liquidity", "type": "u128", "docs": ["offset 74 (unaligned)"] },
-          { "name": "fee_growth_inside_0_last_x64", "type": "u128", "docs": ["offset 90"] },
-          { "name": "fee_growth_inside_1_last_x64", "type": "u128", "docs": ["offset 106"] },
-          { "name": "token_fees_owed_0", "type": "u64", "docs": ["offset 122"] },
-          { "name": "token_fees_owed_1", "type": "u64", "docs": ["offset 130"] },
-          { "name": "rent_receiver", "type": "pubkey", "docs": ["offset 138"] },
-          { "name": "padding", "type": { "array": ["u64", 24] }, "docs": ["offset 170 (upgrade room)"] }
+          {
+            "name": "disc",
+            "type": "u8",
+            "docs": [
+              "offset 0"
+            ]
+          },
+          {
+            "name": "bump",
+            "type": "u8",
+            "docs": [
+              "offset 1"
+            ]
+          },
+          {
+            "name": "pool_id",
+            "type": "pubkey",
+            "docs": [
+              "offset 2 (relational-binding target)"
+            ]
+          },
+          {
+            "name": "core_asset",
+            "type": "pubkey",
+            "docs": [
+              "offset 34 (ownership handle / gate target)"
+            ]
+          },
+          {
+            "name": "tick_lower_index",
+            "type": "i32",
+            "docs": [
+              "offset 66"
+            ]
+          },
+          {
+            "name": "tick_upper_index",
+            "type": "i32",
+            "docs": [
+              "offset 70"
+            ]
+          },
+          {
+            "name": "liquidity",
+            "type": "u128",
+            "docs": [
+              "offset 74 (unaligned)"
+            ]
+          },
+          {
+            "name": "fee_growth_inside_0_last_x64",
+            "type": "u128",
+            "docs": [
+              "offset 90"
+            ]
+          },
+          {
+            "name": "fee_growth_inside_1_last_x64",
+            "type": "u128",
+            "docs": [
+              "offset 106"
+            ]
+          },
+          {
+            "name": "token_fees_owed_0",
+            "type": "u64",
+            "docs": [
+              "offset 122"
+            ]
+          },
+          {
+            "name": "token_fees_owed_1",
+            "type": "u64",
+            "docs": [
+              "offset 130"
+            ]
+          },
+          {
+            "name": "rent_receiver",
+            "type": "pubkey",
+            "docs": [
+              "offset 138"
+            ]
+          },
+          {
+            "name": "padding",
+            "type": {
+              "array": [
+                "u64",
+                24
+              ]
+            },
+            "docs": [
+              "offset 170 (upgrade room)"
+            ]
+          }
         ]
       }
     },
     {
       "name": "Observation",
-      "docs": ["disc 5 (ObservationState). 100-entry tick_cumulative ring (TWAP). PDA [b\"observation\", pool_id]. packed."],
+      "docs": [
+        "disc 5 (ObservationState). 100-entry tick_cumulative ring (TWAP). PDA [b\"observation\", pool_id]. packed."
+      ],
       "type": {
         "kind": "struct",
         "fields": [
-          { "name": "disc", "type": "u8", "docs": ["offset 0"] },
-          { "name": "initialized", "type": "u8", "docs": ["offset 1"] },
-          { "name": "recent_epoch", "type": "u64", "docs": ["offset 2"] },
-          { "name": "observation_index", "type": "u16", "docs": ["offset 10"] },
-          { "name": "pool_id", "type": "pubkey", "docs": ["offset 12"] },
-          { "name": "observations", "type": { "array": [{ "defined": { "name": "ObservationEntry" } }, 100] }, "docs": ["offset 44 (100 x 44 bytes)"] },
-          { "name": "padding", "type": { "array": ["u64", 4] }, "docs": ["offset 4444 (upgrade room)"] }
+          {
+            "name": "disc",
+            "type": "u8",
+            "docs": [
+              "offset 0"
+            ]
+          },
+          {
+            "name": "initialized",
+            "type": "u8",
+            "docs": [
+              "offset 1"
+            ]
+          },
+          {
+            "name": "recent_epoch",
+            "type": "u64",
+            "docs": [
+              "offset 2"
+            ]
+          },
+          {
+            "name": "observation_index",
+            "type": "u16",
+            "docs": [
+              "offset 10"
+            ]
+          },
+          {
+            "name": "pool_id",
+            "type": "pubkey",
+            "docs": [
+              "offset 12"
+            ]
+          },
+          {
+            "name": "observations",
+            "type": {
+              "array": [
+                {
+                  "defined": {
+                    "name": "ObservationEntry"
+                  }
+                },
+                100
+              ]
+            },
+            "docs": [
+              "offset 44 (100 x 44 bytes)"
+            ]
+          },
+          {
+            "name": "padding",
+            "type": {
+              "array": [
+                "u64",
+                4
+              ]
+            },
+            "docs": [
+              "offset 4444 (upgrade room)"
+            ]
+          }
         ]
       }
     },
     {
       "name": "ObservationEntry",
-      "docs": ["Nested in Observation.observations (Rust struct Observation). 44 bytes packed (Raydium Observation order)."],
+      "docs": [
+        "Nested in Observation.observations (Rust struct Observation). 44 bytes packed (Raydium Observation order)."
+      ],
       "type": {
         "kind": "struct",
         "fields": [
-          { "name": "block_timestamp", "type": "u32" },
-          { "name": "tick_cumulative", "type": "i64", "docs": ["cumulative tick over the duration (unaligned)"] },
-          { "name": "padding", "type": { "array": ["u64", 4] } }
+          {
+            "name": "block_timestamp",
+            "type": "u32"
+          },
+          {
+            "name": "tick_cumulative",
+            "type": "i64",
+            "docs": [
+              "cumulative tick over the duration (unaligned)"
+            ]
+          },
+          {
+            "name": "padding",
+            "type": {
+              "array": [
+                "u64",
+                4
+              ]
+            }
+          }
         ]
       }
     },
     {
       "name": "BitmapExtension",
-      "docs": ["disc 6 (TickArrayBitmapExtension). Covers tick arrays beyond the pool-internal bitmap. PDA [b\"pool_tick_array_bitmap_extension\", pool_id]. Swap tail places it FIRST. packed."],
+      "docs": [
+        "disc 6 (TickArrayBitmapExtension). Covers tick arrays beyond the pool-internal bitmap. PDA [b\"pool_tick_array_bitmap_extension\", pool_id]. Swap tail places it FIRST. packed."
+      ],
       "type": {
         "kind": "struct",
         "fields": [
-          { "name": "disc", "type": "u8", "docs": ["offset 0"] },
-          { "name": "pool_id", "type": "pubkey", "docs": ["offset 1 (binding-check target)"] },
-          { "name": "positive_tick_array_bitmap", "type": { "array": [{ "array": ["u64", 8] }, 14] }, "docs": ["offset 33 (14 x [u64;8] for positive start indices)"] },
-          { "name": "negative_tick_array_bitmap", "type": { "array": [{ "array": ["u64", 8] }, 14] }, "docs": ["offset 929 (14 x [u64;8] for negative start indices)"] }
+          {
+            "name": "disc",
+            "type": "u8",
+            "docs": [
+              "offset 0"
+            ]
+          },
+          {
+            "name": "pool_id",
+            "type": "pubkey",
+            "docs": [
+              "offset 1 (binding-check target)"
+            ]
+          },
+          {
+            "name": "positive_tick_array_bitmap",
+            "type": {
+              "array": [
+                {
+                  "array": [
+                    "u64",
+                    8
+                  ]
+                },
+                14
+              ]
+            },
+            "docs": [
+              "offset 33 (14 x [u64;8] for positive start indices)"
+            ]
+          },
+          {
+            "name": "negative_tick_array_bitmap",
+            "type": {
+              "array": [
+                {
+                  "array": [
+                    "u64",
+                    8
+                  ]
+                },
+                14
+              ]
+            },
+            "docs": [
+              "offset 929 (14 x [u64;8] for negative start indices)"
+            ]
+          }
         ]
       }
     },
     {
       "name": "PoolStateAnchor",
-      "docs": ["disc 7 (Engine B). Oracle-anchored maker pool. iso layout (NOT Raydium order); quote fields deliberately 8-aligned. packed; u128/u64 reads via read_unaligned. SIZE 808 bytes. PDA [b\"pool_anchor\", amm_config, mint_0, mint_1, pool_nonce_le]."],
+      "docs": [
+        "disc 7 (Engine B). Oracle-anchored maker pool. iso layout (NOT Raydium order); quote fields deliberately 8-aligned. packed; u128/u64 reads via read_unaligned. SIZE 808 bytes. PDA [b\"pool_anchor\", amm_config, mint_0, mint_1, pool_nonce_le]."
+      ],
       "type": {
         "kind": "struct",
         "fields": [
-          { "name": "disc", "type": "u8", "docs": ["offset 0"] },
-          { "name": "bump", "type": "u8", "docs": ["offset 1"] },
-          { "name": "_pad_align", "type": { "array": ["u8", 6] }, "docs": ["offset 2 (8-byte align)"] },
-          { "name": "amm_config", "type": "pubkey", "docs": ["offset 8"] },
-          { "name": "owner", "type": "pubkey", "docs": ["offset 40 (pool authority)"] },
-          { "name": "token_mint_0", "type": "pubkey", "docs": ["offset 72"] },
-          { "name": "token_mint_1", "type": "pubkey", "docs": ["offset 104"] },
-          { "name": "token_vault_0", "type": "pubkey", "docs": ["offset 136"] },
-          { "name": "token_vault_1", "type": "pubkey", "docs": ["offset 168"] },
-          { "name": "pricer_hot_key", "type": "pubkey", "docs": ["offset 200 (bounded pricer authority)"] },
-          { "name": "mint_decimals_0", "type": "u8", "docs": ["offset 232"] },
-          { "name": "mint_decimals_1", "type": "u8", "docs": ["offset 233"] },
-          { "name": "status", "type": "u8", "docs": ["offset 234 (AnchorStatusBit; swap/deposit/withdraw + guardian-halt bit 3)"] },
-          { "name": "_pad0", "type": { "array": ["u8", 5] }, "docs": ["offset 235"] },
-          { "name": "price_x64", "type": "u128", "docs": ["offset 240 (posted mid, Q64.64; THE oracle)"] },
-          { "name": "bid_factor", "type": "u64", "docs": ["offset 256 ((1-s) band; pool buys base; 0 = flat mid)"] },
-          { "name": "ask_factor", "type": "u64", "docs": ["offset 264 ((1+s) band; pool sells base; 0 = flat mid)"] },
-          { "name": "confidence", "type": "u64", "docs": ["offset 272 (conf-keyed spread)"] },
-          { "name": "price_updated_ms", "type": "u64", "docs": ["offset 280 (wall-clock liveness stamp)"] },
-          { "name": "data_slot", "type": "u64", "docs": ["offset 288 (on-chain write slot; slot-lag stale-gate)"] },
-          { "name": "params_hash", "type": "u64", "docs": ["offset 296 (content-change stamp, distinct from liveness)"] },
-          { "name": "capacity_cap", "type": "u64", "docs": ["offset 304 (per-fill notional cap)"] },
-          { "name": "delta_cap_bps", "type": "u64", "docs": ["offset 312 (max bps/update the hot key may move price)"] },
-          { "name": "target_base", "type": "u128", "docs": ["offset 320 (inventory-skew target base balance)"] },
-          { "name": "inventory_base", "type": "u128", "docs": ["offset 336 (current base inventory)"] },
-          { "name": "s_floor", "type": "u64", "docs": ["offset 352 (per-side spread floor)"] },
-          { "name": "max_slot_lag", "type": "u64", "docs": ["offset 360 (slot-lag staleness window)"] },
-          { "name": "max_age_ms", "type": "u64", "docs": ["offset 368 (wall-clock staleness window, ms)"] },
-          { "name": "cap_bps", "type": "u64", "docs": ["offset 376 (per-fill dst-reserve cap, bps)"] },
-          { "name": "conf_max", "type": "u64", "docs": ["offset 384 (confidence-blowout threshold; 0 disables)"] },
-          { "name": "guardian", "type": "pubkey", "docs": ["offset 392 (HALT-only guardian; all-zero = none)"] },
-          { "name": "max_band_bps", "type": "u64", "docs": ["offset 424 (max per-side band deviation cap, bps; 0 = uncapped)"] },
-          { "name": "pool_nonce", "type": "u32", "docs": ["offset 432 (vanity-grind seed tail, in the pool PDA seed)"] },
-          { "name": "_pad_nonce", "type": "u32", "docs": ["offset 436"] },
-          { "name": "padding1", "type": { "array": ["u64", 14] }, "docs": ["offset 440 (upgrade room)"] },
-          { "name": "padding2", "type": { "array": ["u64", 32] }, "docs": ["offset 552 (upgrade room)"] }
+          {
+            "name": "disc",
+            "type": "u8",
+            "docs": [
+              "offset 0"
+            ]
+          },
+          {
+            "name": "bump",
+            "type": "u8",
+            "docs": [
+              "offset 1"
+            ]
+          },
+          {
+            "name": "_pad_align",
+            "type": {
+              "array": [
+                "u8",
+                6
+              ]
+            },
+            "docs": [
+              "offset 2 (8-byte align)"
+            ]
+          },
+          {
+            "name": "amm_config",
+            "type": "pubkey",
+            "docs": [
+              "offset 8"
+            ]
+          },
+          {
+            "name": "owner",
+            "type": "pubkey",
+            "docs": [
+              "offset 40 (pool authority)"
+            ]
+          },
+          {
+            "name": "token_mint_0",
+            "type": "pubkey",
+            "docs": [
+              "offset 72"
+            ]
+          },
+          {
+            "name": "token_mint_1",
+            "type": "pubkey",
+            "docs": [
+              "offset 104"
+            ]
+          },
+          {
+            "name": "token_vault_0",
+            "type": "pubkey",
+            "docs": [
+              "offset 136"
+            ]
+          },
+          {
+            "name": "token_vault_1",
+            "type": "pubkey",
+            "docs": [
+              "offset 168"
+            ]
+          },
+          {
+            "name": "pricer_hot_key",
+            "type": "pubkey",
+            "docs": [
+              "offset 200 (bounded pricer authority)"
+            ]
+          },
+          {
+            "name": "mint_decimals_0",
+            "type": "u8",
+            "docs": [
+              "offset 232"
+            ]
+          },
+          {
+            "name": "mint_decimals_1",
+            "type": "u8",
+            "docs": [
+              "offset 233"
+            ]
+          },
+          {
+            "name": "status",
+            "type": "u8",
+            "docs": [
+              "offset 234 (AnchorStatusBit; swap/deposit/withdraw + guardian-halt bit 3)"
+            ]
+          },
+          {
+            "name": "_pad0",
+            "type": {
+              "array": [
+                "u8",
+                5
+              ]
+            },
+            "docs": [
+              "offset 235"
+            ]
+          },
+          {
+            "name": "price_x64",
+            "type": "u128",
+            "docs": [
+              "offset 240 (posted mid, Q64.64; THE oracle)"
+            ]
+          },
+          {
+            "name": "bid_factor",
+            "type": "u64",
+            "docs": [
+              "offset 256 ((1-s) band; pool buys base; 0 = flat mid)"
+            ]
+          },
+          {
+            "name": "ask_factor",
+            "type": "u64",
+            "docs": [
+              "offset 264 ((1+s) band; pool sells base; 0 = flat mid)"
+            ]
+          },
+          {
+            "name": "confidence",
+            "type": "u64",
+            "docs": [
+              "offset 272 (conf-keyed spread)"
+            ]
+          },
+          {
+            "name": "price_updated_ms",
+            "type": "u64",
+            "docs": [
+              "offset 280 (wall-clock liveness stamp)"
+            ]
+          },
+          {
+            "name": "data_slot",
+            "type": "u64",
+            "docs": [
+              "offset 288 (on-chain write slot; slot-lag stale-gate)"
+            ]
+          },
+          {
+            "name": "params_hash",
+            "type": "u64",
+            "docs": [
+              "offset 296 (content-change stamp, distinct from liveness)"
+            ]
+          },
+          {
+            "name": "capacity_cap",
+            "type": "u64",
+            "docs": [
+              "offset 304 (per-fill notional cap)"
+            ]
+          },
+          {
+            "name": "delta_cap_bps",
+            "type": "u64",
+            "docs": [
+              "offset 312 (max bps/update the hot key may move price)"
+            ]
+          },
+          {
+            "name": "target_base",
+            "type": "u128",
+            "docs": [
+              "offset 320 (inventory-skew target base balance)"
+            ]
+          },
+          {
+            "name": "inventory_base",
+            "type": "u128",
+            "docs": [
+              "offset 336 (current base inventory)"
+            ]
+          },
+          {
+            "name": "s_floor",
+            "type": "u64",
+            "docs": [
+              "offset 352 (per-side spread floor)"
+            ]
+          },
+          {
+            "name": "max_slot_lag",
+            "type": "u64",
+            "docs": [
+              "offset 360 (slot-lag staleness window)"
+            ]
+          },
+          {
+            "name": "max_age_ms",
+            "type": "u64",
+            "docs": [
+              "offset 368 (wall-clock staleness window, ms)"
+            ]
+          },
+          {
+            "name": "cap_bps",
+            "type": "u64",
+            "docs": [
+              "offset 376 (per-fill dst-reserve cap, bps)"
+            ]
+          },
+          {
+            "name": "conf_max",
+            "type": "u64",
+            "docs": [
+              "offset 384 (confidence-blowout threshold; 0 disables)"
+            ]
+          },
+          {
+            "name": "guardian",
+            "type": "pubkey",
+            "docs": [
+              "offset 392 (HALT-only guardian; all-zero = none)"
+            ]
+          },
+          {
+            "name": "max_band_bps",
+            "type": "u64",
+            "docs": [
+              "offset 424 (max per-side band deviation cap, bps; 0 = uncapped)"
+            ]
+          },
+          {
+            "name": "pool_nonce",
+            "type": "u32",
+            "docs": [
+              "offset 432 (vanity-grind seed tail, in the pool PDA seed)"
+            ]
+          },
+          {
+            "name": "_pad_nonce",
+            "type": "u32",
+            "docs": [
+              "offset 436"
+            ]
+          },
+          {
+            "name": "padding1",
+            "type": {
+              "array": [
+                "u64",
+                14
+              ]
+            },
+            "docs": [
+              "offset 440 (upgrade room)"
+            ]
+          },
+          {
+            "name": "padding2",
+            "type": {
+              "array": [
+                "u64",
+                32
+              ]
+            },
+            "docs": [
+              "offset 552 (upgrade room)"
+            ]
+          }
         ]
       }
     }
   ],
   "errors": [
-    { "code": 6000, "name": "NotImplemented", "msg": "Round-B handlers not yet implemented (round A ships only the dispatch)" },
-    { "code": 6001, "name": "InvalidAccountCount", "msg": "Invalid account count" },
-    { "code": 6002, "name": "InvalidAccountOwner", "msg": "Invalid account owner" },
-    { "code": 6003, "name": "InvalidAccountData", "msg": "Invalid account data" },
-    { "code": 6004, "name": "SlippageExceeded", "msg": "Slippage exceeded: amount_out < minimum (or amount_in > maximum for exact-output)" },
-    { "code": 6005, "name": "MissingSigner", "msg": "Missing required signer" },
-    { "code": 6006, "name": "AccountNotWritable", "msg": "Account not writable" },
-    { "code": 6007, "name": "InvalidPda", "msg": "Invalid PDA" },
-    { "code": 6008, "name": "InvalidMint", "msg": "Invalid mint (bad mint order or bricking mint class)" },
-    { "code": 6009, "name": "InvalidVault", "msg": "Invalid vault" },
-    { "code": 6010, "name": "InvalidTokenProgram", "msg": "Invalid token program (does not match vault owner)" },
-    { "code": 6011, "name": "InvalidFeeRate", "msg": "Invalid fee rate" },
-    { "code": 6012, "name": "InvalidTickSpacing", "msg": "Invalid tick spacing" },
-    { "code": 6013, "name": "UnauthorizedAdmin", "msg": "Unauthorized admin" },
-    { "code": 6014, "name": "InvalidTickRange", "msg": "Invalid tick range (lower>=upper, off-spacing, or out of bounds)" },
-    { "code": 6015, "name": "ZeroLiquidity", "msg": "Zero liquidity (or liquidity exceeds the position)" },
-    { "code": 6016, "name": "PositionNotEmpty", "msg": "Position not empty (liquidity!=0 or fees owed!=0)" },
-    { "code": 6017, "name": "InvalidPositionOwner", "msg": "Invalid position owner / position not keyed to this asset" },
-    { "code": 6018, "name": "MathOverflow", "msg": "Math overflow" },
-    { "code": 6019, "name": "PriceLimitOutOfBounds", "msg": "Price limit out of bounds" },
-    { "code": 6020, "name": "ZeroSwapAmount", "msg": "Zero swap amount" },
-    { "code": 6021, "name": "MaxSwapStepsExceeded", "msg": "Max swap steps exceeded (loop safety backstop)" },
-    { "code": 6022, "name": "InvalidTickIndex", "msg": "Invalid tick index" },
-    { "code": 6023, "name": "NotEnoughTickArrayAccount", "msg": "Swap walked past the supplied tick-array window" },
-    { "code": 6036, "name": "MissingTickArrayBitmapExtension", "msg": "Bitmap-extension account is not provided for a pool past the internal range" },
-    { "code": 6037, "name": "StalePrice", "msg": "Posted price stale (slot-lag, wall-clock, or confidence-blowout)" },
-    { "code": 6038, "name": "PoolPaused", "msg": "Pool paused / action disabled / guardian halt" },
-    { "code": 6039, "name": "PriceDeltaCapExceeded", "msg": "Per-update price delta cap exceeded" },
-    { "code": 6040, "name": "CapacityExceeded", "msg": "Quote notional exceeds the pool capacity / dst-reserve cap" },
-    { "code": 6041, "name": "BandTooWide", "msg": "Posted band wider than the configured maximum (reserved/inert)" },
-    { "code": 6042, "name": "UnauthorizedPricer", "msg": "Pricer hot key did not sign the quote refresh" },
-    { "code": 6043, "name": "MarketClosed", "msg": "Underlying market closed (schedule-aware halt; reserved/inert)" },
-    { "code": 6044, "name": "InvalidPositionPool", "msg": "position.pool_id != the supplied pool" },
-    { "code": 6045, "name": "InvalidTickArrayPool", "msg": "tick_array.pool_id != the supplied pool" },
-    { "code": 6046, "name": "InvalidObservation", "msg": "observation address != pool.observation_key" },
-    { "code": 6047, "name": "BandFactorOutOfRange", "msg": "Posted band factor outside the per-pool max-band cap" },
-    { "code": 6048, "name": "PoolNotEmpty", "msg": "close_pool on a pool that still holds liquidity/inventory or is not paused" }
+    {
+      "code": 6000,
+      "name": "NotImplemented",
+      "msg": "Round-B handlers not yet implemented (round A ships only the dispatch)"
+    },
+    {
+      "code": 6001,
+      "name": "InvalidAccountCount",
+      "msg": "Invalid account count"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidAccountOwner",
+      "msg": "Invalid account owner"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidAccountData",
+      "msg": "Invalid account data"
+    },
+    {
+      "code": 6004,
+      "name": "SlippageExceeded",
+      "msg": "Slippage exceeded: amount_out < minimum (or amount_in > maximum for exact-output)"
+    },
+    {
+      "code": 6005,
+      "name": "MissingSigner",
+      "msg": "Missing required signer"
+    },
+    {
+      "code": 6006,
+      "name": "AccountNotWritable",
+      "msg": "Account not writable"
+    },
+    {
+      "code": 6007,
+      "name": "InvalidPda",
+      "msg": "Invalid PDA"
+    },
+    {
+      "code": 6008,
+      "name": "InvalidMint",
+      "msg": "Invalid mint (bad mint order or bricking mint class)"
+    },
+    {
+      "code": 6009,
+      "name": "InvalidVault",
+      "msg": "Invalid vault"
+    },
+    {
+      "code": 6010,
+      "name": "InvalidTokenProgram",
+      "msg": "Invalid token program (does not match vault owner)"
+    },
+    {
+      "code": 6011,
+      "name": "InvalidFeeRate",
+      "msg": "Invalid fee rate"
+    },
+    {
+      "code": 6012,
+      "name": "InvalidTickSpacing",
+      "msg": "Invalid tick spacing"
+    },
+    {
+      "code": 6013,
+      "name": "UnauthorizedAdmin",
+      "msg": "Unauthorized admin"
+    },
+    {
+      "code": 6014,
+      "name": "InvalidTickRange",
+      "msg": "Invalid tick range (lower>=upper, off-spacing, or out of bounds)"
+    },
+    {
+      "code": 6015,
+      "name": "ZeroLiquidity",
+      "msg": "Zero liquidity (or liquidity exceeds the position)"
+    },
+    {
+      "code": 6016,
+      "name": "PositionNotEmpty",
+      "msg": "Position not empty (liquidity!=0 or fees owed!=0)"
+    },
+    {
+      "code": 6017,
+      "name": "InvalidPositionOwner",
+      "msg": "Invalid position owner / position not keyed to this asset"
+    },
+    {
+      "code": 6018,
+      "name": "MathOverflow",
+      "msg": "Math overflow"
+    },
+    {
+      "code": 6019,
+      "name": "PriceLimitOutOfBounds",
+      "msg": "Price limit out of bounds"
+    },
+    {
+      "code": 6020,
+      "name": "ZeroSwapAmount",
+      "msg": "Zero swap amount"
+    },
+    {
+      "code": 6021,
+      "name": "MaxSwapStepsExceeded",
+      "msg": "Max swap steps exceeded (loop safety backstop)"
+    },
+    {
+      "code": 6022,
+      "name": "InvalidTickIndex",
+      "msg": "Invalid tick index"
+    },
+    {
+      "code": 6023,
+      "name": "NotEnoughTickArrayAccount",
+      "msg": "Swap walked past the supplied tick-array window"
+    },
+    {
+      "code": 6036,
+      "name": "MissingTickArrayBitmapExtension",
+      "msg": "Bitmap-extension account is not provided for a pool past the internal range"
+    },
+    {
+      "code": 6037,
+      "name": "StalePrice",
+      "msg": "Posted price stale (slot-lag, wall-clock, or confidence-blowout)"
+    },
+    {
+      "code": 6038,
+      "name": "PoolPaused",
+      "msg": "Pool paused / action disabled / guardian halt"
+    },
+    {
+      "code": 6039,
+      "name": "PriceDeltaCapExceeded",
+      "msg": "Per-update price delta cap exceeded"
+    },
+    {
+      "code": 6040,
+      "name": "CapacityExceeded",
+      "msg": "Quote notional exceeds the pool capacity / dst-reserve cap"
+    },
+    {
+      "code": 6041,
+      "name": "BandTooWide",
+      "msg": "Posted band wider than the configured maximum (reserved/inert)"
+    },
+    {
+      "code": 6042,
+      "name": "UnauthorizedPricer",
+      "msg": "Pricer hot key did not sign the quote refresh"
+    },
+    {
+      "code": 6043,
+      "name": "MarketClosed",
+      "msg": "Underlying market closed (schedule-aware halt; reserved/inert)"
+    },
+    {
+      "code": 6044,
+      "name": "InvalidPositionPool",
+      "msg": "position.pool_id != the supplied pool"
+    },
+    {
+      "code": 6045,
+      "name": "InvalidTickArrayPool",
+      "msg": "tick_array.pool_id != the supplied pool"
+    },
+    {
+      "code": 6046,
+      "name": "InvalidObservation",
+      "msg": "observation address != pool.observation_key"
+    },
+    {
+      "code": 6047,
+      "name": "BandFactorOutOfRange",
+      "msg": "Posted band factor outside the per-pool max-band cap"
+    },
+    {
+      "code": 6048,
+      "name": "PoolNotEmpty",
+      "msg": "close_pool on a pool that still holds liquidity/inventory or is not paused"
+    }
   ]
 }

@@ -2,7 +2,11 @@
 
 Public **interface** for the iso-xmm AMM on Solana mainnet, for explorers and aggregators.
 
-- `xmm.json` — the program IDL (instructions, accounts, errors). Interface only.
+- `xmm.json` — the program IDL: the **public, permissionless** instruction surface (swaps and the
+  full LP position lifecycle), plus every account, type, and error those instructions reference.
+  Operator-only instructions (pool creation for the oracle-anchored maker, pricer updates, inventory
+  moves, status/teardown, config) are intentionally **not** published; they require a privileged
+  signer and are not callable by integrators.
 - `metadata.json` — program name, logo, IDL URL (for the on-chain program-metadata account).
 - `mbco-logo.png` — the program logo.
 
