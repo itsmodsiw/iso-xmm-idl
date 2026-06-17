@@ -2,7 +2,7 @@
   "name": "iso-xmm",
   "symbol": "ISO-XMM",
   "description": "The lightest Swiss Solana AMM. Apex (concentrated liquidity) + Pulse (oracle-anchored maker) in one program, 0.1 bp fee.",
-  "logo": "https://arweave.net/ZOZq4Hz4ZHTUW0AT9CFPuqcoG52KLAwzWYvhExGNDCE",
+  "logo": "https://arweave.net/COkQTYY4T_APTWUhU5KsVf2MttdeV4-aVyTJmu8jGhQ",
   "idl": "https://raw.githubusercontent.com/itsmodsiw/iso-xmm-idl/main/xmm.json",
   "project_url": "https://xmm.mbco.io",
   "contacts": [
