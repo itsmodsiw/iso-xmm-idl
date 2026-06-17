@@ -744,7 +744,7 @@
       "args": []
     },
     {
-      "name": "swap_anchor",
+      "name": "pulseSwap",
       "docs": [
         "disc 18 (Engine B): linear posted-price maker swap (exact-in). Direction inferred from input_vault == pool.token_vault_0. Zero protocol fee; gates (paused/stale/capacity/slippage) revert."
       ],
